@@ -9,7 +9,6 @@
 #include "func_extra.h"
 
 
-
 void comprimir(FILE *input, FILE *output)
 {
     HEAP *heap = mount_heap(input);
