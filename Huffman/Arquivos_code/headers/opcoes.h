@@ -1,20 +1,36 @@
-#ifndef opcoes_h
-#define opcoes_h
+#ifndef OPCOES_H
+#define OPCOES_H
 
-//mostra as opcoes disponiveis
-void print_opcoes();
-
-// loop de escolhas
+/**
+ * Loop do menu do programa
+ */
 void escolha_loop();
 
 // recebe um nome de arquivo e comprime o arquivo
 void escolha_comprimir();
 
-//recebe dois nomes, um de arquivo comprimido e outro de arquivo descomprimido
+/**
+ * Lê o nome do arquivo comprimido e o nome do arquivo descomprimido e chama a função open_file_decompress
+ */
 void escolha_descomprimir();
 
-void abrir_arquivo_comprimir(char *nome_arquivo);
+/**
+ * Imprime as opções do menu
+ */
+void print_menu();
+/**
+ * Abre o arquivo a ser comprimido e o arquivo em que será escrita a compactação (nome do arquivo de entrada + '.huff')
+ *
+ * @param *input_name      o nome do arquivo a ser comprimido
+ */
+void abrir_arquivo_descomprimir(char *arquivo_comprimido, char *local_descomprimir);
 
-void abrir_arquivo_descomprimir(char *arquivo_comprimido, char *local_descomprimir_descomprimir);
+/**
+ * Abre o arquivo comprimido e o arquivo em que serão escritos os bytes descompactados
+ *
+ * @param *compressed_name         o nome do arquivo comprimido
+ * @param *decompressed_name       o nome do arquivo onde serão escritos os bytes descompactados
+ */
+void open_files_decompress (char *compressed_name, char *decompressed_name);
 
-#endif /* opcoes_h */
+#endif //HUFFMAN_MENU_H
