@@ -83,7 +83,7 @@ void abrir_arquivo_comprimir(char *nome_arquivo)
     }
     else
     {
-        char *output_nome = concat(nome_arquivo, ".huffman");
+        char *output_nome = concat(nome_arquivo, ".huff");
         FILE *output = fopen(output_nome, "w+b");
         
         mallocou(output);
