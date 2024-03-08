@@ -6,24 +6,23 @@
 #include "comprimir.h"
 #include "descomprimir.h"
 
-void print_opcoes()
-{
-    printf("1 ---- Comprimir Arquivo\n");
-    printf("2 ---- Descomprimir Arquivo\n");
-    printf("3 ---- Saida\n");
-}
-
 void escolha_loop()
 {
     int opcao;
-    
+    printf(" __    __   __    __   _______  _______ .___  ___.      ___      .__   __. \n"
+           "|  |  |  | |  |  |  | |   ____||   ____||   \\/   |     /   \\     |  \\ |  | \n"
+           "|  |__|  | |  |  |  | |  |__   |  |__   |  \\  /  |    /  ^  \\    |   \\|  | \n"
+           "|   __   | |  |  |  | |   __|  |   __|  |  |\\/|  |   /  /_\\  \\   |  . `  | \n"
+           "|  |  |  | |  `--'  | |  |     |  |     |  |  |  |  /  _____  \\  |  |\\   | \n"
+           "|__|  |__|  \\______/  |__|     |__|     |__|  |__| /__/     \\__\\ |__| \\__| \n\n");
 
-    while(1){
+    while (1)
+    {
         print_opcoes();
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
-    switch (opcao)
-    {
+        switch (opcao)
+        {
         case 1:
             comprimir();
             break;
@@ -39,5 +38,11 @@ void escolha_loop()
             break;
         }
         printf("\n");
-}       
+    }
+}
+void print_opcoes()
+{
+    printf("1 ---- Comprimir Arquivo\n");
+    printf("2 ---- Descomprimir Arquivo\n");
+    printf("3 ---- Saida\n\n");
 }
