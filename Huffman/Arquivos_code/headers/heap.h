@@ -5,14 +5,14 @@
 
 #include "typedefs.h"
 
-/** Heap - Fila de prioridade **/
+//Fila de prioridade 
 typedef struct HEAP HEAP;
 struct HEAP {
     int size;
     void *data[HEAP_MAX_SIZE];
 };
 
-/** Nó auxiliar **/
+//Nó auxiliar 
 typedef struct _node {
     lli priority;
     void *data;
