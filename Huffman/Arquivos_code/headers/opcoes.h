@@ -1,6 +1,7 @@
-\\oi well
-int main()
-{
-    escolha_loop();
-    return 0;
-}
+#ifndef opcoes_h
+#define opcoes_h
+
+void print_opcoes();
+void escolha_loop();
+
+#endif /* opcoes_h */
