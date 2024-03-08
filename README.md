@@ -3,14 +3,11 @@
 
 ## Integrantes da Equipe:
 
-- **Wellington Cezario dos Santoso**
-  - Email: wcs@ic.ufal.br
+- **Wellington Cezario dos Santoso** | wcs@ic.ufal.br
 
-- **Davi Vieira Lourenço Correia**
-  - Email: dvlc@ic.ufal.br
+- **Davi Vieira Lourenço Correia**   |  dvlc@ic.ufal.br
 
-- **Iury Kauann David Nogueira**
-  - Email: ikdn@ic.ufal.br
+- **Iury Kauann David Nogueira**     | ikdn@ic.ufal.br
 
 ## Divisão do Projeto:
 
