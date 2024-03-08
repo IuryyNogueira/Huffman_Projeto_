@@ -8,7 +8,7 @@ void print_opcoes();
 void escolha_loop();
 
 // recebe um nome de arquivo e comprime o arquivo
-void esolha_comprimir();
+void escolha_comprimir();
 
 //recebe dois nomes, um de arquivo comprimido e outro de arquivo descomprimido
 void escolha_descomprimir();
