@@ -153,6 +153,5 @@ void free_heap(HEAP *heap)
     {
         free((_node *) heap->data[i]);
     }
-
     free(heap);
 }

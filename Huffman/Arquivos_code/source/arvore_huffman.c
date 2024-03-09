@@ -55,6 +55,17 @@ u_short pegar_tamanho_tree(TREE *tree)
 	return 1 + get_tree_size(tree->left) + get_tree_size(tree->right);
 }
 
+void free_tree(TREE *tree)
+{
+	if (!is_empty(tree))
+    {
+        free_tree(tree->left);
+        free_tree(tree->right);
+
+        free(tree);
+    }
+}
+
 lli get_parent_frequencia(TREE *tree)
 {
 	return tree->left->frequency + tree->right->frequency;
@@ -80,7 +91,7 @@ TREE *criar_arvore_huffman(HEAP *heap)
 	return t;
 }
 
-void map_paths(TREE *tree, HASH *hash, char *path, int i)
+void mapear_caminhos(TREE *tree, HASH *hash, char *path, int i)
 {
 	if (!is_empty(tree))
     {
@@ -89,7 +100,7 @@ void map_paths(TREE *tree, HASH *hash, char *path, int i)
             path[i] = '\0';
 
             char *finish_path = (char *) malloc(sizeof(char) * (strlen(path) + 1));
-            check_malloc(finish_path);
+            mallocou(finish_path);
 
             strcpy(finish_path, path);
 
@@ -100,14 +111,30 @@ void map_paths(TREE *tree, HASH *hash, char *path, int i)
             if (!is_empty(tree->left))
             {
                 path[i] = '0';
-                map_paths(tree->left, hash, path, i + 1);
+                mapear_caminhos(tree->left, hash, path, i + 1);
             }
 
             if (!is_empty(tree->right))
             {
                 path[i] = '1';
-                map_paths(tree->right, hash, path, i + 1);
+                mapear_caminhos(tree->right, hash, path, i + 1);
             }
         }
     }
+}
+
+void escrita_arvore_pre_ordem(TREE *tree, FILE *output)
+{
+	if (is_empty(tree))
+	{
+		return;
+	}
+
+	if (is_escape_char(tree, tree->c))
+	{
+	    fprintf(output, "%c", '\\');
+	}
+	fwrite(&tree->c, 1, 1, output);
+	escrita_arvore_pre_ordem(tree->left, output);
+	escrita_arvore_pre_ordem(tree->right, output);
 }
