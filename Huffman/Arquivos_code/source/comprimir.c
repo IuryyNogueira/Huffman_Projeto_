@@ -15,17 +15,17 @@ void comprimir(FILE *input, FILE *output)
 
     rewind(input);
 
-    TREE *huff_tree = create_huffman_tree(heap);
+    TREE *huff_tree = criar_arvore_huffman(heap);
 
     HASH *paths = create_hash();
 
-    u_short tree_sz = get_tree_size(huff_tree);
+    u_short tree_tamanho = pegar_tamanho_tree(huff_tree);
 
-    char path[tree_sz];
+    char path[tree_tamanho];
 
     map_paths(huff_tree, paths, path, 0);
 
-    write_tree_size(tree_sz, output);
+    write_tree_size(tree_tamanho, output);
 
     write_pre_order_tree(huff_tree, output);
 
