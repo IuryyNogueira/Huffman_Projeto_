@@ -62,11 +62,12 @@ lli get_priority(HEAP *h, int index)
     return ((_node *) h->data[index])->priority;
 }
 
+//foco aqui
 void enqueue(HEAP *heap, lli prioridade, void *data)
 {
     if (heap->size >= HEAP_MAX_SIZE - 1)
     {
-        printf("Heap overflow.\n");
+        printf("Heap overflow\n");
     }
     else
     {
@@ -74,24 +75,24 @@ void enqueue(HEAP *heap, lli prioridade, void *data)
 
         heap->data[++heap->size] = new_node;
 
-        int key_index = heap->size;
+        int chave_index = heap->size;
 
-        int parent_index = get_parent_index(key_index);
+        int parent_index = get_parent_index(chave_index);
 
-        while (parent_index >= 1 && get_priority(heap, key_index) < get_priority(heap, parent_index))
+        while (parent_index >= 1 && get_priority(heap, chave_index) < get_priority(heap, parent_index))
         {
-            swap_data(&heap->data[parent_index], &heap->data[key_index]);
+            swap_data(&heap->data[parent_index], &heap->data[chave_index]);
 
-            key_index = parent_index;
+            chave_index = parent_index;
 
-            parent_index = get_parent_index(key_index);
+            parent_index = get_parent_index(chave_index);
         }
     }
 }
 
 void min_heapify(HEAP *heap, int i)
 {
-    int smallest;
+    int o_menor;
     int left_index = get_left_index(i);
     int right_index = get_right_index(i);
 
@@ -101,28 +102,28 @@ void min_heapify(HEAP *heap, int i)
 
     if (left_index <= heap->size && t_l->priority < t->priority)
     {
-        smallest = left_index;
+        o_menor = left_index;
     }
     else
     {
-        smallest = i;
+        o_menor = i;
     }
 
-    _node *t_s = heap->data[smallest];
+    _node *t_menor = heap->data[o_menor];
 
-    if (right_index <= heap->size && t_r->priority < t_s->priority)
+    if (right_index <= heap->size && t_r->priority < t_menor->priority)
     {
-        smallest = right_index;
-        t_s = heap->data[smallest];
+        o_menor = right_index;
+        t_menor = heap->data[o_menor];
     }
 
-    if (t != t_s)
+    if (t != t_menor)
     {
-        swap_data(&heap->data[i], &heap->data[smallest]);
-        min_heapify(heap, smallest);
+        swap_data(&heap->data[i], &heap->data[o_menor]);
+        min_heapify(heap, o_menor);
     }
 }
-
+//foca aqui
 void *dequeue(HEAP *heap)
 {
     if (!(heap->size))
@@ -152,6 +153,5 @@ void free_heap(HEAP *heap)
     {
         free((_node *) heap->data[i]);
     }
-
     free(heap);
 }
