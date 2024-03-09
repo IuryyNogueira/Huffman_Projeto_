@@ -7,6 +7,7 @@
 
 //Fila de prioridade 
 typedef struct HEAP HEAP;
+
 struct HEAP {
     int size;
     void *data[HEAP_MAX_SIZE];

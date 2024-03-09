@@ -11,7 +11,7 @@
 
 void comprimir(FILE *input, FILE *output)
 {
-    HEAP *heap = mount_heap(input);
+    HEAP *heap = montar_heap(input);
 
     rewind(input);
 
