@@ -1,5 +1,5 @@
-#ifndef HUFFMAN_HEAP_H
-#define HUFFMAN_HEAP_H
+#ifndef HEAP_H
+#define HEAP_H
 
 #define HEAP_MAX_SIZE 257
 
@@ -19,6 +19,27 @@ typedef struct _node {
     void *data;
 } _node;
 
+_node* _create_node(lli priority, void *data);
+
+HEAP *criar_heap();
+
+int get_parent_index(int i);
+
+int get_left_index(int i);
+
+int get_right_index(int i);
+
+void swap_data(void **item_1, void **item_2);
+
+lli get_priority(HEAP *h, int index);
+
+void enqueue(HEAP *heap, lli prioridade, void *data);
+
+void min_heapify(HEAP *heap, int i);
+
+void *dequeue(HEAP *heap);
+
+void free_heap(HEAP *heap);
 
 
-#endif //HUFFMAN_HEAP_H
+#endif //HEAP_H

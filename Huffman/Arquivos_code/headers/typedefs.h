@@ -1,19 +1,18 @@
-#ifndef HUFFMAN_TYPEDEFS_H
-#define HUFFMAN_TYPEDEFS_H
+#ifndef TYPEDEFS_H
+#define TYPEDEFS_H
 
-/**
- * Abrevia "unsigned char" para "u_char"
- */
+#include <stdio.h>
+#include "heap.h"
+#include "hash.h"
+#include "arvore_huffman.h"
+
+//Abrevia "unsigned char" para "u_char"
 typedef unsigned char u_char;
 
-/**
- * Abrevia "unsigned short" para "u_short"
- */
+//Abrevia "unsigned short" para "u_short"
 typedef unsigned short u_short;
 
-/**
- * Abrevia "long long int" para "lli"
- */
+//Abrevia "long long int" para "lli"
 typedef long long int lli;
 
-#endif //HUFFMAN_TYPEDEFS_H
+#endif //TYPEDEFS_H
