@@ -6,7 +6,7 @@
 #include "comprimir.h"
 #include "descomprimir.h"
 
-#define FILE_PATH "Arquivos_code/files/"
+#define FILE_PATH "../../Arquivos_teste/"
 
 void escolha_loop()
 {
