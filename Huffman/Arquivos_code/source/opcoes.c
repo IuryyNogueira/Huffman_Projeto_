@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "opcoes.h"
 #include "func_extras.h"
 #include "comprimir.h"
 #include "descomprimir.h"
+#include "opcoes.h"
 
 #define FILE_PATH "../../Arquivos_teste/"
 
