@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../headers/decomprimir.h"
+#include "../headers/descomprimir.h"
 
 int is_bit_set(u_char c, int i)
 {
@@ -37,7 +37,7 @@ TREE* qual_e_arvore(FILE* input, TREE* tree)
 {
 	u_char c;
 	fscanf(input, "%c",&c);
-	tree = create_node(c, 0, NULL, NULL);
+	tree = create_node_arvore(c, 0, NULL, NULL);
 
 	if(c == '*'){
 		tree->left = qual_e_arvore(input, tree->left);
@@ -51,7 +51,7 @@ TREE* qual_e_arvore(FILE* input, TREE* tree)
 	return tree;
 }
 
-void decomprimir_one_ascii_file(FILE* input, FILE* output, TREE* tree, int trash_size)
+void descomprimir_one_ascii_file(FILE* input, FILE* output, TREE* tree, int trash_size)
 {
 	TREE* new_tree = tree;
 

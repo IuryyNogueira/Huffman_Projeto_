@@ -71,7 +71,7 @@ void enqueue(HEAP *heap, lli prioridade, void *data)
     }
     else
     {
-        _node *new_node = _create_node(priority, data);
+        _node *new_node = _create_node(prioridade, data);
 
         heap->data[++heap->size] = new_node;
 

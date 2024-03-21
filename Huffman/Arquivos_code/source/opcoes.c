@@ -56,7 +56,7 @@ void escolha_comprimir()
     scanf("%s", arquivo);
     getchar();
 
-    abrir_arquivo_comprimir(concat(FILE_PATH, name));
+    abrir_arquivo_comprimir(concat(FILE_PATH, arquivo));
 }
 
 void escolha_descomprimir()
@@ -71,7 +71,7 @@ void escolha_descomprimir()
     scanf("%s", descomprimido);
     getchar();
 
-    open_files_decompress(concat(FILE_PATH, arquivo_comp), concat(FILE_PATH, descomprimido));
+    abrir_arquivo_descomprimir(concat(FILE_PATH, arquivo_comp), concat(FILE_PATH, descomprimido));
 }
 
 void abrir_arquivo_comprimir(char *nome_arquivo)
@@ -110,7 +110,7 @@ void abrir_arquivo_comprimir(char *nome_arquivo)
             
             mallocou(output);
 
-            descoprimir(input, output);
+            descomprimir(input, output);
 
             fclose(output);
 

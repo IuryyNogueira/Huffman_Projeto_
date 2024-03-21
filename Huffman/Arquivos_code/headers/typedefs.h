@@ -1,10 +1,6 @@
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
 
-#include <stdio.h>
-#include "heap.h"
-#include "hash.h"
-#include "arvore_huffman.h"
 
 //Abrevia "unsigned char" para "u_char"
 typedef unsigned char u_char;

@@ -10,7 +10,7 @@ void criacao_fila_prioridade(lli frequencia[], HEAP *heap) {
     int i;
     for (i = 0; i < 256; i++) {
         if (frequencia[i] != 0) {
-            enqueue(heap, frequency[i], create_node_arvore((u_char) i, frequency[i], NULL, NULL));
+            enqueue(heap, frequencia[i], create_node_arvore((u_char) i, frequencia[i], NULL, NULL));
         }
     }
 }
@@ -41,7 +41,7 @@ void mallocou(void *mem)
 HEAP *montar_heap(FILE *arquivo_entrada)
 {
     HEAP *heap = criar_heap();
-    lli *frequencia = contador_frequencia(arquivo_entrada);
+    lli *frequencia = contador_de_frequencia(arquivo_entrada);
     criacao_fila_prioridade(frequencia, heap);
 
     return heap;
@@ -50,7 +50,7 @@ HEAP *montar_heap(FILE *arquivo_entrada)
 char* concat(char *s1, char *s2)
 {
     char *result = malloc(strlen(s1) + strlen(s2) + 1);
-    check_malloc(result);
+    mallocou(result);
 
     strcpy(result, s1);
     strcat(result, s2);

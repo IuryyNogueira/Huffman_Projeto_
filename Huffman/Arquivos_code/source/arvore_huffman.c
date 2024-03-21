@@ -10,7 +10,7 @@
 TREE *create_node_arvore(u_char character, lli frequency, TREE *left, TREE *right)
 {
 	TREE *new_node = (TREE*)malloc(sizeof(TREE));
-	check_malloc(new_node);
+	mallocou(new_node);
 
 	new_node->c = character;
 	new_node->frequency = frequency;
@@ -52,7 +52,7 @@ u_short pegar_tamanho_tree(TREE *tree)
         return 2;
     }
 
-	return 1 + get_tree_size(tree->left) + get_tree_size(tree->right);
+	return 1 + pegar_tamanho_tree(tree->left) + pegar_tamanho_tree(tree->right);
 }
 
 void free_tree(TREE *tree)

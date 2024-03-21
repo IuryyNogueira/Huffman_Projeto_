@@ -6,7 +6,7 @@
 #include "heap.h"
 #include "hash.h"
 #include "arvore_huffman.h"
-#include "func_extra.h"
+#include "func_extras.h"
 
 u_char set_bit(u_char c, int i)
 {
