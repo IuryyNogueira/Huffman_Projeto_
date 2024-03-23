@@ -10,19 +10,21 @@ PriorityQueueNoHeap* createPriorityQueueNoHeap(int capacity) {
     return pq;
 }
 
-void enqueueNoHeap(PriorityQueueNoHeap* pq, int value) {
+
+void enqueueNoHeap(PriorityQueueNoHeap* pq, int value, int priority) {
     if (pq->size == pq->capacity) {
         printf("A fila de prioridade sem heap está cheia.\n");
         return;
     }
     int index = pq->size;
-    while (index > 0 && pq->arr[(index - 1) / 2] < value) {
+    while (index > 0 && pq->arr[(index - 1) / 2] < priority) {
         pq->arr[index] = pq->arr[(index - 1) / 2];
         index = (index - 1) / 2;
     }
     pq->arr[index] = value;
     pq->size++;
 }
+
 
 int dequeueNoHeap(PriorityQueueNoHeap* pq) {
     if (pq->size == 0) {

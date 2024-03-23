@@ -8,7 +8,7 @@ typedef struct PriorityQueueNoHeap{
 } PriorityQueueNoHeap;
 
 PriorityQueueNoHeap* createPriorityQueueNoHeap(int capacity);
-void enqueueNoHeap(PriorityQueueNoHeap* pq, int value);
+void enqueueNoHeap(PriorityQueueNoHeap* pq, int value, int priority);
 int dequeueNoHeap(PriorityQueueNoHeap* pq);
 void destroyPriorityQueueNoHeap(PriorityQueueNoHeap* pq);
 

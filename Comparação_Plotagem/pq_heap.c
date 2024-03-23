@@ -10,19 +10,20 @@ PriorityQueueHeap* createPriorityQueueHeap(int capacity) {
     return pq;
 }
 
-void enqueueHeap(PriorityQueueHeap* pq, int value) {
+void enqueueHeap(PriorityQueueHeap* pq, int value, int priority) {
     if (pq->size == pq->capacity) {
         printf("A fila de prioridade com heap está cheia.\n");
         return;
     }
     int index = pq->size;
-    while (index > 0 && pq->arr[(index - 1) / 2] < value) {
+    while (index > 0 && pq->arr[(index - 1) / 2] < priority) {
         pq->arr[index] = pq->arr[(index - 1) / 2];
         index = (index - 1) / 2;
     }
     pq->arr[index] = value;
     pq->size++;
 }
+
 
 int dequeueHeap(PriorityQueueHeap* pq) {
     if (pq->size == 0) {
