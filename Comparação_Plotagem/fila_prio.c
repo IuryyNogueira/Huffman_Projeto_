@@ -1,95 +1,86 @@
-#include "fila_prio.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "fila_prio.h"
 
-PriorityQueueNoHeap* createPriorityQueueNoHeap(int capacity) {
+PriorityQueueNoHeap* createPriorityQueueNoHeap() {
     PriorityQueueNoHeap* pq = (PriorityQueueNoHeap*)malloc(sizeof(PriorityQueueNoHeap));
-    pq->arr = (int*)malloc(capacity * sizeof(int));
-    pq->size = 0;
-    pq->capacity = capacity;
+    if (pq == NULL) {
+        fprintf(stderr, "Erro ao alocar memória para a fila de prioridade.\n");
+        exit(EXIT_FAILURE);
+    }
+    pq->front = NULL;
     return pq;
 }
 
-
 void enqueueNoHeap(PriorityQueueNoHeap* pq, int value, int priority) {
-    if (pq->size == pq->capacity) {
-        printf("A fila de prioridade sem heap está cheia.\n");
-        return;
+    PriorityQueueNode* newNode = (PriorityQueueNode*)malloc(sizeof(PriorityQueueNode));
+    if (newNode == NULL) {
+        fprintf(stderr, "Erro ao alocar memória para o novo nó.\n");
+        exit(EXIT_FAILURE);
     }
-    int index = pq->size;
-    while (index > 0 && pq->arr[(index - 1) / 2] < priority) {
-        pq->arr[index] = pq->arr[(index - 1) / 2];
-        index = (index - 1) / 2;
+    newNode->value = value;
+    newNode->priority = priority;
+    newNode->next = NULL;
+
+    // Se a fila estiver vazia ou se o novo elemento tiver prioridade maior do que o primeiro elemento
+    if (pq->front == NULL || priority > pq->front->priority) {
+        newNode->next = pq->front;
+        pq->front = newNode;
+    } else {
+        PriorityQueueNode* current = pq->front;
+        // Procurar o local de inserção do novo elemento
+        while (current->next != NULL && current->next->priority >= priority) {
+            current = current->next;
+        }
+        newNode->next = current->next;
+        current->next = newNode;
     }
-    pq->arr[index] = value;
-    pq->size++;
 }
 
-
 int dequeueNoHeap(PriorityQueueNoHeap* pq) {
-    if (pq->size == 0) {
-        printf("A fila de prioridade sem heap está vazia.\n");
-        return -1;
+    if (pq->front == NULL) {
+        fprintf(stderr, "A fila de prioridade sem heap está vazia.\n");
+        exit(EXIT_FAILURE);
     }
-    int maxValue = pq->arr[0];
-    int lastValue = pq->arr[pq->size - 1];
-    pq->size--;
-    int index = 0;
-    while (1) {
-        int leftChild = 2 * index + 1;
-        int rightChild = 2 * index + 2;
-        if (leftChild >= pq->size) {
-            break;
-        }
-        int maxChild = leftChild;
-        if (rightChild < pq->size && pq->arr[rightChild] > pq->arr[leftChild]) {
-            maxChild = rightChild;
-        }
-        if (lastValue >= pq->arr[maxChild]) {
-            break;
-        }
-        pq->arr[index] = pq->arr[maxChild];
-        index = maxChild;
-    }
-    pq->arr[index] = lastValue;
-    return maxValue;
+    PriorityQueueNode* temp = pq->front;
+    int value = temp->value;
+    pq->front = pq->front->next;
+    free(temp);
+    return value;
 }
 
 void deleteValue(PriorityQueueNoHeap* pq, int value) {
-    int i;
-    for (i = 0; i < pq->size; i++) {
-        if (pq->arr[i] == value) {
-            // Element found, perform deletion
-            int index = i;
-            int lastValue = pq->arr[pq->size - 1];
-            pq->size--;
-
-            // Similar to the dequeue operation, adjust the priority queue
-            while (1) {
-                int leftChild = 2 * index + 1;
-                int rightChild = 2 * index + 2;
-                if (leftChild >= pq->size) {
-                    break;
-                }
-                int maxChild = leftChild;
-                if (rightChild < pq->size && pq->arr[rightChild] > pq->arr[leftChild]) {
-                    maxChild = rightChild;
-                }
-                if (lastValue >= pq->arr[maxChild]) {
-                    break;
-                }
-                pq->arr[index] = pq->arr[maxChild];
-                index = maxChild;
-            }
-            pq->arr[index] = lastValue;
-            return; // Element deleted, return from the function
-        }
+    if (pq->front == NULL) {
+        fprintf(stderr, "A fila de prioridade sem heap está vazia.\n");
+        return;
     }
-    // If the loop completes, the value was not found
-    printf("Element %d not found in the priority queue.\n", value);
+    PriorityQueueNode* current = pq->front;
+    PriorityQueueNode* prev = NULL;
+    // Procurar o nó com o valor especificado
+    while (current != NULL && current->value != value) {
+        prev = current;
+        current = current->next;
+    }
+    // Se o valor não foi encontrado
+    if (current == NULL) {
+        printf("Valor não encontrado na fila de prioridade.\n");
+        return;
+    }
+    // Se o nó com o valor foi encontrado
+    if (prev == NULL) {
+        // Se o nó está no início da fila
+        pq->front = current->next;
+    } else {
+        prev->next = current->next;
+    }
+    free(current);
 }
 
 void destroyPriorityQueueNoHeap(PriorityQueueNoHeap* pq) {
-    free(pq->arr);
+    while (pq->front != NULL) {
+        PriorityQueueNode* temp = pq->front;
+        pq->front = pq->front->next;
+        free(temp);
+    }
     free(pq);
 }

@@ -18,7 +18,7 @@ int main() {
     for (int i = 0; i < MAX_SIZE; i++) {
         int randomNumber = rand() % 100000; // Gera números aleatórios entre 0 e 99999
         int randomPriority = rand() % 3; // Gera números aleatórios entre 0 e 2 para a prioridade
-        enqueueHeap(pqHeap, randomNumber, randomPriority);
+        enqueueHeap(pqHeap, randomNumber);
         enqueueNoHeap(pqNoHeap, randomNumber, randomPriority);
     }
     

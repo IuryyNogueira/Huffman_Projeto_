@@ -1,56 +1,77 @@
-#include "pq_heap.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "pq_heap.h"
 
 PriorityQueueHeap* createPriorityQueueHeap(int capacity) {
     PriorityQueueHeap* pq = (PriorityQueueHeap*)malloc(sizeof(PriorityQueueHeap));
+    if (pq == NULL) {
+        fprintf(stderr, "Erro ao alocar memória para a fila de prioridade com heap.\n");
+        exit(EXIT_FAILURE);
+    }
     pq->arr = (int*)malloc(capacity * sizeof(int));
-    pq->size = 0;
+    if (pq->arr == NULL) {
+        fprintf(stderr, "Erro ao alocar memória para o array da fila de prioridade com heap.\n");
+        exit(EXIT_FAILURE);
+    }
     pq->capacity = capacity;
+    pq->size = 0;
     return pq;
 }
 
-void enqueueHeap(PriorityQueueHeap* pq, int value, int priority) {
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void heapifyUp(PriorityQueueHeap* pq, int index) {
+    int parent = (index - 1) / 2;
+    while (index > 0 && pq->arr[index] > pq->arr[parent]) {
+        swap(&pq->arr[index], &pq->arr[parent]);
+        index = parent;
+        parent = (index - 1) / 2;
+    }
+}
+
+void enqueueHeap(PriorityQueueHeap* pq, int value) {
     if (pq->size == pq->capacity) {
-        printf("A fila de prioridade com heap está cheia.\n");
-        return;
+        fprintf(stderr, "A fila de prioridade com heap está cheia.\n");
+        exit(EXIT_FAILURE);
     }
-    int index = pq->size;
-    while (index > 0 && pq->arr[(index - 1) / 2] < priority) {
-        pq->arr[index] = pq->arr[(index - 1) / 2];
-        index = (index - 1) / 2;
-    }
-    pq->arr[index] = value;
+    pq->arr[pq->size] = value;
+    heapifyUp(pq, pq->size);
     pq->size++;
 }
 
+void heapifyDown(PriorityQueueHeap* pq, int index) {
+    int leftChild, rightChild, maxChild;
+    while (1) {
+        leftChild = 2 * index + 1;
+        rightChild = 2 * index + 2;
+        maxChild = index;
+        if (leftChild < pq->size && pq->arr[leftChild] > pq->arr[maxChild]) {
+            maxChild = leftChild;
+        }
+        if (rightChild < pq->size && pq->arr[rightChild] > pq->arr[maxChild]) {
+            maxChild = rightChild;
+        }
+        if (maxChild == index) {
+            break;
+        }
+        swap(&pq->arr[index], &pq->arr[maxChild]);
+        index = maxChild;
+    }
+}
 
 int dequeueHeap(PriorityQueueHeap* pq) {
     if (pq->size == 0) {
-        printf("A fila de prioridade com heap está vazia.\n");
-        return -1;
+        fprintf(stderr, "A fila de prioridade com heap está vazia.\n");
+        exit(EXIT_FAILURE);
     }
     int maxValue = pq->arr[0];
-    int lastValue = pq->arr[pq->size - 1];
+    pq->arr[0] = pq->arr[pq->size - 1];
     pq->size--;
-    int index = 0;
-    while (1) {
-        int leftChild = 2 * index + 1;
-        int rightChild = 2 * index + 2;
-        if (leftChild >= pq->size) {
-            break;
-        }
-        int maxChild = leftChild;
-        if (rightChild < pq->size && pq->arr[rightChild] > pq->arr[leftChild]) {
-            maxChild = rightChild;
-        }
-        if (lastValue >= pq->arr[maxChild]) {
-            break;
-        }
-        pq->arr[index] = pq->arr[maxChild];
-        index = maxChild;
-    }
-    pq->arr[index] = lastValue;
+    heapifyDown(pq, 0);
     return maxValue;
 }
 
@@ -59,33 +80,13 @@ void deleteValueHeap(PriorityQueueHeap* pq, int value) {
     for (i = 0; i < pq->size; i++) {
         if (pq->arr[i] == value) {
             // Element found, perform deletion
-            int index = i;
-            int lastValue = pq->arr[pq->size - 1];
+            pq->arr[i] = pq->arr[pq->size - 1];
             pq->size--;
-
-            // Similar to the dequeue operation, adjust the priority queue
-            while (1) {
-                int leftChild = 2 * index + 1;
-                int rightChild = 2 * index + 2;
-                if (leftChild >= pq->size) {
-                    break;
-                }
-                int maxChild = leftChild;
-                if (rightChild < pq->size && pq->arr[rightChild] > pq->arr[leftChild]) {
-                    maxChild = rightChild;
-                }
-                if (lastValue >= pq->arr[maxChild]) {
-                    break;
-                }
-                pq->arr[index] = pq->arr[maxChild];
-                index = maxChild;
-            }
-            pq->arr[index] = lastValue;
-            return; // Element deleted, return from the function
+            heapifyDown(pq, i);
+            return; // Element deleted
         }
     }
-    // If the loop completes, the value was not found
-    printf("Element %d not found in the priority queue.\n", value);
+    
 }
 
 void destroyPriorityQueueHeap(PriorityQueueHeap* pq) {
