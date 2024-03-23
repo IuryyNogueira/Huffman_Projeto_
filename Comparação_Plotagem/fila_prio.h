@@ -1,31 +1,33 @@
 #ifndef fila_prio_h
 #define fila_prio_h
 
-// Estrutura para representar um nó na fila de prioridade
-typedef struct PriorityQueueNode {
-    int value;
-    int priority;
-    struct PriorityQueueNode* next;
-} PriorityQueueNode;
+// Estrutura para representar um nó da fila de prioridade
+typedef struct node {
+    int data;
+    struct node* next;
+} Node;
 
-// Estrutura para representar a fila de prioridade
+// Estrutura para representar uma fila de prioridade
 typedef struct {
-    PriorityQueueNode* front;
-} PriorityQueueNoHeap;
+    Node* front;
+} PriorityQueue;
 
-// Cria uma fila de prioridade vazia
-PriorityQueueNoHeap* createPriorityQueueNoHeap();
+// Inicializa uma fila de prioridade vazia
+PriorityQueue* create_priority_queueNoHeap();
 
-// Insere um elemento na fila de prioridade
-void enqueueNoHeap(PriorityQueueNoHeap* pq, int value, int priority);
+// Insere um elemento na fila de prioridade com base em sua prioridade
+void enqueueNoHeap(PriorityQueue* pq, int data);
 
 // Remove e retorna o elemento de maior prioridade da fila de prioridade
-int dequeueNoHeap(PriorityQueueNoHeap* pq);
+int dequeueNoHeap(PriorityQueue* pq);
 
-// Remove um valor específico da fila de prioridade
-void deleteValue(PriorityQueueNoHeap* pq, int value);
+// Verifica se a fila de prioridade está vazia
+int is_emptyNoHeap(PriorityQueue* pq);
 
-// Libera a memória alocada para a fila de prioridade
-void destroyPriorityQueueNoHeap(PriorityQueueNoHeap* pq);
+// Remove o elemento especificado da fila de prioridade
+int delete_valueNoHeap(PriorityQueue* pq, int value);
+
+// Libera toda a memória alocada para a fila de prioridade
+void destroy_priority_queueNoHeap(PriorityQueue* pq);
 
 #endif /* fila_prio_h */
