@@ -10,7 +10,7 @@ typedef struct PriorityQueueHeap{
 PriorityQueueHeap* create_priority_queue(int capacity);
 void enqueueHeap(PriorityQueueHeap* pq, int data);
 int dequeue(PriorityQueueHeap* pq);
-void delete_value(PriorityQueueHeap* pq, int value);
+int delete_value(PriorityQueueHeap* pq, int value);
 int is_empty(PriorityQueueHeap* pq);
 void destroy_priority_queue(PriorityQueueHeap* pq);
 

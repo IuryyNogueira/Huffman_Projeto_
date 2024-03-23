@@ -25,7 +25,7 @@ int dequeueNoHeap(PriorityQueue* pq);
 int is_emptyNoHeap(PriorityQueue* pq);
 
 // Remove o elemento especificado da fila de prioridade
-void delete_valueNoHeap(PriorityQueue* pq, int value);
+int delete_valueNoHeap(PriorityQueue* pq, int value);
 
 // Libera toda a memória alocada para a fila de prioridade
 void destroy_priority_queueNoHeap(PriorityQueue* pq);
