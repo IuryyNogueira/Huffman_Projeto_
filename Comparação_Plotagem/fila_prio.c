@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include "fila_prio.h"
 
-PriorityQueueNoHeap* createPriorityQueueNoHeap() {
-    PriorityQueueNoHeap* pq = (PriorityQueueNoHeap*)malloc(sizeof(PriorityQueueNoHeap));
+// Inicializa uma fila de prioridade vazia
+PriorityQueue* create_priority_queueNoHeap() {
+    PriorityQueue* pq = (PriorityQueue*)malloc(sizeof(PriorityQueue));
     if (pq == NULL) {
         fprintf(stderr, "Erro ao alocar memória para a fila de prioridade.\n");
         exit(EXIT_FAILURE);
@@ -12,24 +13,21 @@ PriorityQueueNoHeap* createPriorityQueueNoHeap() {
     return pq;
 }
 
-void enqueueNoHeap(PriorityQueueNoHeap* pq, int value, int priority) {
-    PriorityQueueNode* newNode = (PriorityQueueNode*)malloc(sizeof(PriorityQueueNode));
+// Insere um elemento na fila de prioridade com base em sua prioridade
+void enqueueNoHeap(PriorityQueue* pq, int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
     if (newNode == NULL) {
         fprintf(stderr, "Erro ao alocar memória para o novo nó.\n");
         exit(EXIT_FAILURE);
     }
-    newNode->value = value;
-    newNode->priority = priority;
-    newNode->next = NULL;
+    newNode->data = data;
 
-    // Se a fila estiver vazia ou se o novo elemento tiver prioridade maior do que o primeiro elemento
-    if (pq->front == NULL || priority > pq->front->priority) {
+    if (pq->front == NULL || data < pq->front->data) {
         newNode->next = pq->front;
         pq->front = newNode;
     } else {
-        PriorityQueueNode* current = pq->front;
-        // Procurar o local de inserção do novo elemento
-        while (current->next != NULL && current->next->priority >= priority) {
+        Node* current = pq->front;
+        while (current->next != NULL && data >= current->next->data) {
             current = current->next;
         }
         newNode->next = current->next;
@@ -37,50 +35,58 @@ void enqueueNoHeap(PriorityQueueNoHeap* pq, int value, int priority) {
     }
 }
 
-int dequeueNoHeap(PriorityQueueNoHeap* pq) {
-    if (pq->front == NULL) {
-        fprintf(stderr, "A fila de prioridade sem heap está vazia.\n");
+// Remove e retorna o elemento de maior prioridade da fila de prioridade
+int dequeueNoHeap(PriorityQueue* pq) {
+    if (is_emptyNoHeap(pq)) {
+        fprintf(stderr, "A fila de prioridade está vazia.\n");
         exit(EXIT_FAILURE);
     }
-    PriorityQueueNode* temp = pq->front;
-    int value = temp->value;
+    Node* temp = pq->front;
+    int data = temp->data;
     pq->front = pq->front->next;
     free(temp);
-    return value;
+    return data;
 }
 
-void deleteValue(PriorityQueueNoHeap* pq, int value) {
-    if (pq->front == NULL) {
-        fprintf(stderr, "A fila de prioridade sem heap está vazia.\n");
-        return;
-    }
-    PriorityQueueNode* current = pq->front;
-    PriorityQueueNode* prev = NULL;
-    // Procurar o nó com o valor especificado
-    while (current != NULL && current->value != value) {
-        prev = current;
-        current = current->next;
-    }
-    // Se o valor não foi encontrado
-    if (current == NULL) {
-        printf("Valor não encontrado na fila de prioridade.\n");
-        return;
-    }
-    // Se o nó com o valor foi encontrado
-    if (prev == NULL) {
-        // Se o nó está no início da fila
-        pq->front = current->next;
-    } else {
-        prev->next = current->next;
-    }
-    free(current);
+// Verifica se a fila de prioridade está vazia
+int is_emptyNoHeap(PriorityQueue* pq) {
+    return pq->front == NULL;
 }
 
-void destroyPriorityQueueNoHeap(PriorityQueueNoHeap* pq) {
-    while (pq->front != NULL) {
-        PriorityQueueNode* temp = pq->front;
+// Remove o elemento especificado da fila de prioridade
+int delete_valueNoHeap(PriorityQueue* pq, int value) {
+    
+    int i = 0;
+    if (is_emptyNoHeap(pq)) { //nao vai estar vazia nesse projeto
+        fprintf(stderr, "A fila de prioridade está vazia.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Caso o valor esteja na frente da fila
+    while (pq->front != NULL && pq->front->data == value) {
+        Node* temp = pq->front;
         pq->front = pq->front->next;
         free(temp);
+    }
+
+    // Caso o valor esteja em outros lugares na fila
+    Node* current = pq->front;
+    while (current != NULL && current->next != NULL) {
+        if (current->next->data == value) {
+            Node* temp = current->next;
+            current->next = current->next->next;
+            free(temp);
+        } else {
+            current = current->next;
+        }
+    }
+}
+
+
+// Libera toda a memória alocada para a fila de prioridade
+void destroy_priority_queueNoHeap(PriorityQueue* pq) {
+    while (!is_emptyNoHeap(pq)) {
+        dequeueNoHeap(pq);
     }
     free(pq);
 }
