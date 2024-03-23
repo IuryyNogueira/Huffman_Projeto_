@@ -1,0 +1,15 @@
+#ifndef fila_prio
+#define fila_prio
+
+typedef struct PriorityQueueNoHeap{
+    int *arr;
+    int size;
+    int capacity;
+} PriorityQueueNoHeap;
+
+PriorityQueueNoHeap* createPriorityQueueNoHeap(int capacity);
+void enqueueNoHeap(PriorityQueueNoHeap* pq, int value);
+int dequeueNoHeap(PriorityQueueNoHeap* pq);
+void destroyPriorityQueueNoHeap(PriorityQueueNoHeap* pq);
+
+#endif /* fila_prio */
