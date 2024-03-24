@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 data = open('data.txt', 'r')
 number = []
@@ -16,14 +17,20 @@ for linha in data:
     fp_heap.append(int(heap))
     i += 1  # increment the counter
 
-# Plot the data
-plt.plot(number, fp, label='Normal')
-plt.plot(number, fp_heap, label='Heap')
+data.close()  # Close the file
+
+# Calculate cumulative sums
+fp_cumsum = np.cumsum(fp)
+fp_heap_cumsum = np.cumsum(fp_heap)
+
+# Plot the cumulative sums
+plt.plot(number, fp_cumsum, label='Normal')
+plt.plot(number, fp_heap_cumsum, label='Heap')
 
 # Add labels and title
 plt.xlabel('Number')
-plt.ylabel('Value')
-plt.title('Plot of Data')
+plt.ylabel('Cumulative Sum')
+plt.title('Cumulative Sum of Data')
 
 # Add a legend
 plt.legend()
