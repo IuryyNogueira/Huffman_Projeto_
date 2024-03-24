@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 #include "fila_prio.h"
 #include "pq_heap.h"
 
@@ -8,7 +9,7 @@
 
 int main() {
     // Inicializando a semente para gerar números aleatórios
-    srand(time(NULL));
+    srand(time(NULL) ^ getpid());
 
     // Criando fila de prioridade com heap e sem heap
     PriorityQueueHeap* pqHeap = create_priority_queue(MAX_SIZE);
@@ -29,12 +30,12 @@ int main() {
     }
     
     for (int i = 0; i < 10000; i++){
-        int randomNumber = rand() % 20000;
+        int randomNumber = rand() % 100000;
         int heap = delete_value(pqHeap, randomNumber);
         int noHeap = delete_valueNoHeap(pqNoHeap, randomNumber);
         
         // Escrever os valores deletados no arquivo
-        fprintf(file, "%d %d\n", heap, noHeap);
+        fprintf(file, "%d %d\n", noHeap, heap);
     }
     
     // Fechar o arquivo

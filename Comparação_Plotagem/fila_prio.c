@@ -64,6 +64,7 @@ int delete_valueNoHeap(PriorityQueue* pq, int value) {
 
     // Caso o valor esteja na frente da fila
     while (pq->front != NULL && pq->front->data == value) {
+        i++;
         Node* temp = pq->front;
         pq->front = pq->front->next;
         free(temp);
@@ -72,6 +73,7 @@ int delete_valueNoHeap(PriorityQueue* pq, int value) {
     // Caso o valor esteja em outros lugares na fila
     Node* current = pq->front;
     while (current != NULL && current->next != NULL) {
+        i++;
         if (current->next->data == value) {
             Node* temp = current->next;
             current->next = current->next->next;
@@ -80,6 +82,7 @@ int delete_valueNoHeap(PriorityQueue* pq, int value) {
             current = current->next;
         }
     }
+    return i;
 }
 
 
