@@ -3,7 +3,6 @@
 
 
 #include <stdio.h>
-
 #include "heap.h"
 #include "hash.h"
 #include "arvore_huffman.h"

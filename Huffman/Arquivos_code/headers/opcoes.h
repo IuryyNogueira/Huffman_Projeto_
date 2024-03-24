@@ -9,7 +9,7 @@ void escolha_descomprimir();
 
 void print_opcoes();
 
-void abrir_arquivo_comprimir (char *nome_arquivo);
+void  abrir_arquivo_comprimir (char *nome_arquivo);
 
 void abrir_arquivo_descomprimir (char *arquivo_comprimido, char *local_descomprimir);
 

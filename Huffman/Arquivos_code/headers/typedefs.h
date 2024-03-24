@@ -1,7 +1,6 @@
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
 
-
 //Abrevia "unsigned char" para "u_char"
 typedef unsigned char u_char;
 

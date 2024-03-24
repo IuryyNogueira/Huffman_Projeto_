@@ -71,7 +71,7 @@ void escolha_descomprimir()
     scanf("%s", descomprimido);
     getchar();
 
-    abrir_arquivo_descomprimir(concat(FILE_PATH, arquivo_comp), concat(FILE_PATH, descomprimido));
+    abrir_arquivo_descomprimir (concat(FILE_PATH, arquivo_comp), concat(FILE_PATH, descomprimido));
 }
 
 void abrir_arquivo_comprimir(char *nome_arquivo)
@@ -96,9 +96,10 @@ void abrir_arquivo_comprimir(char *nome_arquivo)
         free(output);
         printf("Arquivo comprimido ᕙ(`▿´)ᕗ\n");
     }
+}
 
-    void abrir_arquivo_descomprimir(char *arquivo_comprimido, char *local_descomprimir)
-    {
+void abrir_arquivo_descomprimir(char *arquivo_comprimido, char *local_descomprimir)
+{
         FILE *input = fopen(arquivo_comprimido, "rb");
         if (input == NULL)
         {
@@ -119,4 +120,3 @@ void abrir_arquivo_comprimir(char *nome_arquivo)
             printf("Arquivo descomprimido ᕙ(`▿´)ᕗ\n");
         }
     }
-}
