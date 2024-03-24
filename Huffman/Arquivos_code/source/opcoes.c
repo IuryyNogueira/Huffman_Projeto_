@@ -92,8 +92,6 @@ void abrir_arquivo_comprimir(char *nome_arquivo)
 
         fclose(output);
 
-        free(input);
-        free(output);
         printf("Arquivo comprimido ᕙ(`▿´)ᕗ\n");
     }
 }
@@ -115,8 +113,6 @@ void abrir_arquivo_descomprimir(char *arquivo_comprimido, char *local_descomprim
 
             fclose(output);
 
-            free(input);
-            free(output);
             printf("Arquivo descomprimido ᕙ(`▿´)ᕗ\n");
         }
     }

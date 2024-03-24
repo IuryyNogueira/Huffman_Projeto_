@@ -1,4 +1,4 @@
-#include "opcoes.c"
+#include "opcoes.h"
 
 int main()
 {
