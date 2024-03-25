@@ -16,8 +16,10 @@ u_char set_bit(u_char c, int i)
 
 void comprimir(FILE *input, FILE *output)
 {
+    // Monta a heap com base na frequencia dos bytes 
     HEAP *heap = montar_heap(input);
 
+    // volta o ponteiro pro inicio do arquivo - pós leitura -
     rewind(input);
 
     TREE *huff_tree = criar_arvore_huffman(heap);

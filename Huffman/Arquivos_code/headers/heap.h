@@ -1,6 +1,7 @@
 #ifndef HEAP_H
 #define HEAP_H
 
+// 0 --> 255 + 1 = 257
 #define HEAP_MAX_SIZE 257
 
 #include "typedefs.h"

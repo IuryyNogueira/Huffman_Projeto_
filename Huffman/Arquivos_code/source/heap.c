@@ -27,64 +27,70 @@ HEAP *criar_heap()
 
     heap->size = 0;
 
+    // loop para inicializar a heap ---> limpando 
     for (int i = 1; i < HEAP_MAX_SIZE; ++i)
     {
         heap->data[i] = NULL;
     }
 
+    // heap pronto para para o trabalho 
     return heap;
 }
 
-int get_parent_index(int i)
-{
-    return (i / 2);
-}
+int get_parent_index(int i) return (i / 2);
 
-int get_left_index(int i)
-{
-    return (2 * i);
-}
+int get_left_index(int i) return (2 * i);
 
-int get_right_index(int i)
-{
-    return (2 * i + 1);
-}
+int get_right_index(int i) return (2 * i + 1);
 
-void swap_data(void **item_1, void **item_2)
+
+// ** pq passamos um endereco de memoria
+void swap(void **item_1, void **item_2)
 {
     void *aux = *item_1;
     *item_1 = *item_2;
     *item_2 = aux;
 }
-
-lli get_priority(HEAP *h, int index)
+// retorna a prioridade do nó da arvore 
+lli get_priority(HEAP *h, int indice)
 {
-    return ((_node *) h->data[index])->priority;
+    return ((_node *) h->data[indice])->priority;
 }
 
-//foco aqui
+//nós bytes/ frequencia / heap inicial(size | *data[] --> para os nós que vão guardar os nós da arvore)
 void enqueue(HEAP *heap, lli prioridade, void *data)
 {
-    if (heap->size >= HEAP_MAX_SIZE - 1)
-    {
-        printf("Heap overflow\n");
-    }
+    // passou dos tipos possiveis?
+    if (heap->size >= HEAP_MAX_SIZE - 1) printf("Heap overflow\n");
+   
     else
-    {
+    {   
+        // _node é definido em heap.h
+        // que vai armazenar o nó da arvore
         _node *new_node = _create_node(prioridade, data);
 
+        // em heap->data[++heap->size]  ++ é pra começar pelo 1 | é uma HEAP |
+        // pq heap->size começa em 0 e nossa struct heap em *data[tem 257]
+        // E add em size 
         heap->data[++heap->size] = new_node;
 
+        // index do nó que acabou de ser adicionado
         int chave_index = heap->size;
 
+        // index do pai do nó que acabou de ser adicionado
+        // (chave_index / 2);
         int parent_index = get_parent_index(chave_index);
 
+        // manter a propriedade de heap 
+        // movendo o novo elemento para a posição correta
         while (parent_index >= 1 && get_priority(heap, chave_index) < get_priority(heap, parent_index))
         {
-            swap_data(&heap->data[parent_index], &heap->data[chave_index]);
+            // se freq do (nó arvore)do atual for menor que a do pai
+            // troca os nós
+            swap (&heap->data[parent_index], &heap->data[chave_index]);
 
+            //troca
             chave_index = parent_index;
-
             parent_index = get_parent_index(chave_index);
         }
     }
@@ -119,7 +125,7 @@ void min_heapify(HEAP *heap, int i)
 
     if (t != t_menor)
     {
-        swap_data(&heap->data[i], &heap->data[o_menor]);
+        swap(&heap->data[i], &heap->data[o_menor]);
         min_heapify(heap, o_menor);
     }
 }

@@ -6,14 +6,18 @@
 #include "arvore_huffman.h"
 #include "heap.h"
 
-
+// Cria um nó da árvore de Huffman com os parâmetros passados em 
+// compactar: func_extras.c --> criacao_fila_prioridade linha 17
 TREE *create_node_arvore(u_char character, lli frequency, TREE *left, TREE *right)
 {
 	TREE *new_node = (TREE*)malloc(sizeof(TREE));
 	mallocou(new_node);
 
+	// caso o (caractere/byte) atual 
 	new_node->c = character;
+	
 	new_node->frequency = frequency;
+	
 	new_node->left = left;
 	new_node->right = right;
 
