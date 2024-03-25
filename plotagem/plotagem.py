@@ -28,9 +28,9 @@ plt.plot(number, fp_cumsum, label='Normal')
 plt.plot(number, fp_heap_cumsum, label='Heap')
 
 # Add labels and title
-plt.xlabel('Number')
-plt.ylabel('Cumulative Sum')
-plt.title('Cumulative Sum of Data')
+plt.xlabel('Numbers deleted')
+plt.ylabel('iterations')
+plt.title('priority queue with and without heap')
 
 # Add a legend
 plt.legend()
