@@ -79,7 +79,7 @@ void abrir_arquivo_comprimir(char *nome_arquivo)
     FILE *input = fopen(nome_arquivo, "rb");
     if (input == NULL)
     {
-        printf("Arquivo nao encontrado (╥﹏╥)\n");
+        printf("\nArquivo nao encontrado (╥﹏╥)\n");
     }
     else
     {
@@ -92,7 +92,7 @@ void abrir_arquivo_comprimir(char *nome_arquivo)
 
         fclose(output);
 
-        printf("Arquivo comprimido ᕙ(`▿´)ᕗ\n");
+        printf("\nArquivo comprimido ᕙ(`▿´)ᕗ\n");
     }
 }
 
@@ -101,7 +101,7 @@ void abrir_arquivo_descomprimir(char *arquivo_comprimido, char *local_descomprim
         FILE *input = fopen(arquivo_comprimido, "rb");
         if (input == NULL)
         {
-            printf("Arquivo nao encontrado (╥﹏╥)\n");
+            printf("\nArquivo nao encontrado (╥﹏╥)\n");
         }
         else
         {
@@ -113,6 +113,6 @@ void abrir_arquivo_descomprimir(char *arquivo_comprimido, char *local_descomprim
 
             fclose(output);
 
-            printf("Arquivo descomprimido ᕙ(`▿´)ᕗ\n");
+            printf("\nArquivo descomprimido ᕙ(`▿´)ᕗ\n");
         }
     }
