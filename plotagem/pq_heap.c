@@ -21,24 +21,35 @@ PriorityQueueHeap* create_priority_queue(int capacity) {
 }
 
 // Função para ajustar o heap após a inserção de um novo elemento
-void heapify_up(PriorityQueueHeap* pq, int index) { // index é o indice do ultimo elemento da heap antes de chamar heapfy_up
+int heapify_up(PriorityQueueHeap* pq, int index) { // index é o indice do ultimo elemento da heap antes de chamar heapfy_up
+
+    int i = 0;
     int* heap_array = pq->heap_array;
     while (index > 0 && heap_array[index] < heap_array[(index - 1) / 2]) {
+        i++;
         int temp = heap_array[index];
         heap_array[index] = heap_array[(index - 1) / 2];
         heap_array[(index - 1) / 2] = temp;
         index = (index - 1) / 2;
     }
+
+    return i;
 }
 
 // Função para inserir um novo elemento na fila de prioridade
-void enqueueHeap(PriorityQueueHeap* pq, int data) {
-    if (pq->size == pq->capacity) {
+int enqueueHeap(PriorityQueueHeap* pq, int data) {
+
+    int i = 0;
+
+    //verificando se a fila esta cheia
+    if (pq->size == pq->capacity) { //nesse projeto nao vai passar do limite pq vamos inserir o tamanho certo de numeros
         fprintf(stderr, "A fila de prioridade está cheia.\n");
         exit(EXIT_FAILURE);
     }
     pq->heap_array[pq->size++] = data;
-    heapify_up(pq, pq->size - 1);
+    i += heapify_up(pq, pq->size - 1);
+
+    return i;
 }
 
 // Função para ajustar o heap após a remoção do elemento de maior prioridade
@@ -92,24 +103,6 @@ int dequeue(PriorityQueueHeap* pq) {
 int is_empty(PriorityQueueHeap* pq) {
     return pq->size == 0;
 }
-
-// Função para deletar um valor específico da fila de prioridade
-int delete_value(PriorityQueueHeap* pq, int value) {
-    int i;
-    for (i = 0; i < pq->size; i++) {
-        if (pq->heap_array[i] == value) {
-            // Encontrou o valor na posição i
-            // Move o valor para a raiz do heap
-            pq->heap_array[i] = pq->heap_array[pq->size - 1];
-            pq->size--;
-            // Realiza heapify_down a partir da raiz para corrigir o heap
-            heapify_down(pq, i);
-            break;
-        }
-    }
-    return i + 1; // Retorna número de comparações
-}
-
 
 // Função para liberar a memória alocada para a fila de prioridade
 void destroy_priority_queue(PriorityQueueHeap* pq) {
