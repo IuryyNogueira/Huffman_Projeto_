@@ -1,13 +1,18 @@
-#ifndef HUFFMAN_HUFF_TREE_H
-#define HUFFMAN_HUFF_TREE_H
+#ifndef HUFF_TREE_H
+#define HUFF_TREE_H
 
 #include "heap.h"
 #include "hash.h"
+#include "func_extras.h"
 
-/** Árvore de Huffman **/
+// -------Árvore--------
 typedef struct TREE{
     lli frequency;
+    
+    // (caractere/byte)
     u_char c;
+    
+    // nós filhos
     struct TREE *left;
     struct TREE *right;
 } TREE;
@@ -32,4 +37,4 @@ void mapear_caminhos(TREE *tree, HASH *hash, char *path, int i);
 
 void escrita_arvore_pre_ordem(TREE *tree, FILE *output);
 
-#endif //HUFFMAN_HUFF_TREE_H
+#endif //HUFF_TREE_H
