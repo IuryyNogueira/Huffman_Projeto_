@@ -14,7 +14,11 @@ PriorityQueue* create_priority_queueNoHeap() {
 }
 
 // Insere um elemento na fila de prioridade com base em sua prioridade
-void enqueueNoHeap(PriorityQueue* pq, int data) {
+int enqueueNoHeap(PriorityQueue* pq, int data) {
+
+    //inicializando o contador das iterações
+    int i = 0;
+
     Node* newNode = (Node*)malloc(sizeof(Node));
     if (newNode == NULL) {
         fprintf(stderr, "Erro ao alocar memória para o novo nó.\n");
@@ -23,16 +27,25 @@ void enqueueNoHeap(PriorityQueue* pq, int data) {
     newNode->data = data;
 
     if (pq->front == NULL || data < pq->front->data) {
+        
+        i++;
         newNode->next = pq->front;
         pq->front = newNode;
-    } else {
+    } 
+    else {
+
+        //para entrar no else foi necessária uma comparação
+        i++;
         Node* current = pq->front;
         while (current->next != NULL && data >= current->next->data) {
+            i++;
             current = current->next;
         }
         newNode->next = current->next;
         current->next = newNode;
     }
+
+    return i;
 }
 
 // Remove e retorna o elemento de maior prioridade da fila de prioridade
@@ -52,39 +65,6 @@ int dequeueNoHeap(PriorityQueue* pq) {
 int is_emptyNoHeap(PriorityQueue* pq) {
     return pq->front == NULL;
 }
-
-// Remove o elemento especificado da fila de prioridade
-int delete_valueNoHeap(PriorityQueue* pq, int value) {
-    
-    int i = 0;
-    if (is_emptyNoHeap(pq)) { //nao vai estar vazia nesse projeto
-        fprintf(stderr, "A fila de prioridade está vazia.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    // Caso o valor esteja na frente da fila
-    if (pq->front != NULL && pq->front->data == value) {
-        i++;
-        Node* temp = pq->front;
-        pq->front = pq->front->next;
-        free(temp);
-    }
-
-    // Caso o valor esteja em outros lugares na fila
-    Node* current = pq->front;
-    while (current != NULL && current->next != NULL) {
-        i++;
-        if (current->next->data == value) {
-            Node* temp = current->next;
-            current->next = current->next->next;
-            free(temp);
-        } else {
-            current = current->next;
-        }
-    }
-    return i;
-}
-
 
 // Libera toda a memória alocada para a fila de prioridade
 void destroy_priority_queueNoHeap(PriorityQueue* pq) {
