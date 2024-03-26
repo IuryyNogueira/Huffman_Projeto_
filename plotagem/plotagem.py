@@ -6,35 +6,39 @@ number = []
 fp = []
 fp_heap = []
 
-i = 1
+i = 0
 
+normal = 0
+heap = 0
 for linha in data:
     linha = linha.strip()
-    normal, heap = linha.split(' ')
+    normal_reading_value, heap_reading_value = linha.split(' ') # Lendo valores do arquivo
 
+    # Somando valores para acumular em normal e heap, para comparar a evolução
+    normal += int(normal_reading_value)
+    heap += int(heap_reading_value)
+
+    # Colocando os valores em seus respectivos arrays
     number.append(i)
     fp.append(int(normal))
     fp_heap.append(int(heap))
-    i += 1  # increment the counter
+    i += 1  # Incrementando o contador
 
-data.close()  # Close the file
+data.close()  # Fechar o arquivo
 
-# Calculate cumulative sums
-fp_cumsum = np.cumsum(fp)
-fp_heap_cumsum = np.cumsum(fp_heap)
+# Plotando a evolução das somas à medida que os números são deletados
+plt.plot(number, fp, label='Normal')
+plt.plot(number, fp_heap, label='Heap')
 
-# Plot the cumulative sums
-plt.plot(number, fp_cumsum, label='Normal')
-plt.plot(number, fp_heap_cumsum, label='Heap')
-
-# Add labels and title
+# Adicionando rótulos e título
 plt.xlabel('Numbers deleted')
-plt.ylabel('iterations')
-plt.title('priority queue with and without heap')
+plt.ylabel('Cumulative iterations')
+plt.title('Cumulative Iterations as Numbers Deleted Increase')
 
-# Add a legend
+# Adicionando uma legenda
 plt.legend()
 
-# Display the plot
+# Exibindo o gráfico
 plt.tight_layout()
+plt.grid(True)  # Adiciona uma grade para melhor visualização
 plt.show()

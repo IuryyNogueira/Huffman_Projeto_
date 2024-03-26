@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "pq_heap.h"
 
+
 // Função para criar uma nova fila de prioridade
 PriorityQueueHeap* create_priority_queue(int capacity) {
     PriorityQueueHeap* pq = (PriorityQueueHeap*)malloc(sizeof(PriorityQueueHeap));
@@ -20,7 +21,7 @@ PriorityQueueHeap* create_priority_queue(int capacity) {
 }
 
 // Função para ajustar o heap após a inserção de um novo elemento
-void heapify_up(PriorityQueueHeap* pq, int index) {
+void heapify_up(PriorityQueueHeap* pq, int index) { // index é o indice do ultimo elemento da heap antes de chamar heapfy_up
     int* heap_array = pq->heap_array;
     while (index > 0 && heap_array[index] < heap_array[(index - 1) / 2]) {
         int temp = heap_array[index];
@@ -41,27 +42,38 @@ void enqueueHeap(PriorityQueueHeap* pq, int data) {
 }
 
 // Função para ajustar o heap após a remoção do elemento de maior prioridade
-void heapify_down(PriorityQueueHeap* pq, int index) {
+int heapify_down(PriorityQueueHeap* pq, int index) {
     int* heap_array = pq->heap_array;
+    int comparisons = 0; // Variável para contar as comparações
     int smallest = index;
     int left_child = 2 * index + 1;
     int right_child = 2 * index + 2;
 
-    if (left_child < pq->size && heap_array[left_child] < heap_array[smallest]) {
-        smallest = left_child;
+    if (left_child < pq->size) {
+        comparisons++; // Incrementa o número de comparações
+        if (heap_array[left_child] < heap_array[smallest]) {
+            smallest = left_child;
+        }
     }
 
-    if (right_child < pq->size && heap_array[right_child] < heap_array[smallest]) {
-        smallest = right_child;
+    if (right_child < pq->size) {
+        comparisons++; // Incrementa o número de comparações
+        if (heap_array[right_child] < heap_array[smallest]) {
+            smallest = right_child;
+        }
     }
 
     if (smallest != index) {
         int temp = heap_array[index];
         heap_array[index] = heap_array[smallest];
         heap_array[smallest] = temp;
-        heapify_down(pq, smallest);
+        // Chama heapify_down recursivamente para o nó filho alterado
+        comparisons += heapify_down(pq, smallest);
     }
+
+    return comparisons; // Retorna o número total de comparações realizadas
 }
+
 
 // Função para remover e retornar o elemento de maior prioridade da fila de prioridade
 int dequeue(PriorityQueueHeap* pq) {
@@ -86,15 +98,18 @@ int delete_value(PriorityQueueHeap* pq, int value) {
     int i;
     for (i = 0; i < pq->size; i++) {
         if (pq->heap_array[i] == value) {
+            // Encontrou o valor na posição i
+            // Move o valor para a raiz do heap
             pq->heap_array[i] = pq->heap_array[pq->size - 1];
             pq->size--;
+            // Realiza heapify_down a partir da raiz para corrigir o heap
             heapify_down(pq, i);
-            break; // valor esta na fila e sera removido
+            break;
         }
-        // valor nao encontrado, pode estar ou nao na lista
     }
-    return i + 1; //retornando numero de comparações
+    return i + 1; // Retorna número de comparações
 }
+
 
 // Função para liberar a memória alocada para a fila de prioridade
 void destroy_priority_queue(PriorityQueueHeap* pq) {
