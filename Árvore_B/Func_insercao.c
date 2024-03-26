@@ -21,8 +21,7 @@ struct btreeNode *createNode(int item, struct btreeNode *child) {
   return newNode;
 }
 
-void insertValue(int item, int pos, struct btreeNode *node,
-          struct btreeNode *child) {
+void insertValue(int item, int pos, struct btreeNode *node, struct btreeNode *child) {
   int j = node->count;
   while (j > pos) {
     node->item[j + 1] = node->item[j];
@@ -34,8 +33,7 @@ void insertValue(int item, int pos, struct btreeNode *node,
   node->count++;
 }
 
-void splitNode(int item, int *pval, int pos, struct btreeNode *node,
-         struct btreeNode *child, struct btreeNode **newNode) {
+void splitNode(int item, int *pval, int pos, struct btreeNode *node, struct btreeNode *child, struct btreeNode **newNode) {
   int median, j;
 
   if (pos > MIN)
@@ -63,8 +61,7 @@ void splitNode(int item, int *pval, int pos, struct btreeNode *node,
   node->count--;
 }
 
-int setNodeValue(int item, int *pval,
-           struct btreeNode *node, struct btreeNode **child) {
+int setNodeValue(int item, int *pval, struct btreeNode *node, struct btreeNode **child) {
   int pos;
   if (!node) {
     *pval = item;
