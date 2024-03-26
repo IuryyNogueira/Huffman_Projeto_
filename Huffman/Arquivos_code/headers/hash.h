@@ -3,7 +3,7 @@
 
 #define MAX_HASH_ADDRESS_SIZE 256
 
-/** Hash Table - Mapeamento de bits **/
+// mapear os bits
 typedef struct HASH{
     void *table[MAX_HASH_ADDRESS_SIZE];
 } HASH;

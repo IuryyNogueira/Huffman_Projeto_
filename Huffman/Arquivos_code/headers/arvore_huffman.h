@@ -3,6 +3,7 @@
 
 #include "heap.h"
 #include "hash.h"
+#include "func_extras.h"
 
 // -------Árvore--------
 typedef struct TREE{

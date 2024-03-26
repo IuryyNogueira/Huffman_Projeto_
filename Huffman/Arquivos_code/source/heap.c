@@ -37,11 +37,17 @@ HEAP *criar_heap()
     return heap;
 }
 
-int get_parent_index(int i) return (i / 2);
+int get_parent_index(int i){ 
+    return (i / 2);
+}
 
-int get_left_index(int i) return (2 * i);
+int get_left_index(int i){
+    return (2 * i);
+} 
 
-int get_right_index(int i) return (2 * i + 1);
+int get_right_index(int i) {
+    return (2 * i + 1);
+}
 
 
 // ** pq passamos um endereco de memoria
@@ -96,18 +102,27 @@ void enqueue(HEAP *heap, lli prioridade, void *data)
     }
 }
 
+// manter a propriedade de heap
 void min_heapify(HEAP *heap, int i)
 {
     int o_menor;
+
+    // index do filho esquerdo no atual
     int left_index = get_left_index(i);
+
+    // index do filho direito 
     int right_index = get_right_index(i);
 
+    // Obtém ponteiros para os nós atual, esquerdo e direito na heap.
     _node *t = heap->data[i];
     _node *t_l = heap->data[left_index];
     _node *t_r = heap->data[right_index];
 
+    // Verifica se o nó esquerdo existe na heap e se sua prioridade
+    // é menor do que a prioridade do nó atual.
     if (left_index <= heap->size && t_l->priority < t->priority)
     {
+        // vira o indice do filho esquerdo
         o_menor = left_index;
     }
     else
@@ -115,21 +130,30 @@ void min_heapify(HEAP *heap, int i)
         o_menor = i;
     }
 
+    // preparo 2 verificacao
     _node *t_menor = heap->data[o_menor];
 
+    // Verifica se o nó direito existe na heap e se sua prioridade 
+    // é menor do que a prioridade do nó atual ou do nó esquerdo, se já foi definido como o menor.
     if (right_index <= heap->size && t_r->priority < t_menor->priority)
     {
         o_menor = right_index;
         t_menor = heap->data[o_menor];
     }
 
+    // Verifica se o nó atual é diferente do nó de menor prioridade. Se forem diferentes, 
+    // significa que a propriedade de heap é violada e é necessária uma troca.
     if (t != t_menor)
     {
+        // troca os nós
         swap(&heap->data[i], &heap->data[o_menor]);
+        // chama recursivamente a função para o nó de menor prioridade.
         min_heapify(heap, o_menor);
     }
 }
-//foca aqui
+
+
+// usado criar arvore de huffman
 void *dequeue(HEAP *heap)
 {
     if (!(heap->size))
@@ -139,14 +163,19 @@ void *dequeue(HEAP *heap)
     }
     else
     {
+        // extrai elemento menor prioridade da heap
         _node *item = (_node *) heap->data[1];
 
+        // troca o menor elemento com o ultimo elemento
         heap->data[1] = heap->data[heap->size];
 
+        // remove o ultimo elemento
         heap->data[heap->size] = NULL;
 
+        // decrementa o tamanho da heap
         heap->size -= 1;
 
+        // mantem a propriedade de heap
         min_heapify(heap, 1);
 
         return item->data;

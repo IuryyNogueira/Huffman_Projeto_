@@ -56,4 +56,11 @@
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
+  "files.associations": {
+    "hash.h": "c",
+    "unity.h": "c",
+    "func_extras.h": "c",
+    "heap.h": "c",
+    "arvore_huffman.h": "c"
+  },
 }
