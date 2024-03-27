@@ -3,12 +3,6 @@
 
 #include "../headers/descomprimir.h"
 
-int is_bit_set(u_char c, int i)
-{
-	// posição do bit atual 
-    u_char mask = 1 << i;
-    return mask & c;
-}
 
 int qual_tamanho_lixo(FILE *input)
 {
@@ -16,8 +10,22 @@ int qual_tamanho_lixo(FILE *input)
 	u_char byte;
 
 	fscanf(input, "%c", &byte);
+
+	// so quero os 3 primeiros bits do byte
 	trash_size = byte >> 5;
+	// retorna o tamanho do lixo
 	return trash_size;
+}
+
+int is_bit_set(u_char c, int i)
+{
+	// posição do bit atual 
+    u_char mask = 1 << i;
+
+	// operaçao AND para verificar se o bit esta setado	como 1 de fato 
+	// se for 1 retorna 1 vamos pra direita pra percorrer a arvore
+	// se for 0 retorna 0 vamos pra esquerda 
+    return mask & c;
 }
 
 short qual_tamanho_arvore(FILE *input)
@@ -28,17 +36,18 @@ short qual_tamanho_arvore(FILE *input)
 	//le o primeiro byte do arquivo
 	fscanf(input, "%c", &byte);
 
-	//limpa o tamanho do lixo
+	//limpa o tamanho do lixo e volta para a posicao correta
 	byte <<= 3;
 	byte >>= 3;
 
-	// como pegamos o primeiro byte do texto temos que passalo para a posicao correta   
+	// como pegamos o primeiro byte do texto temos que passar para a posicao correta   
+	// short 2 bytes
 	tree_size = byte << 8;
 
 	//le o proximo byte
 	fscanf(input, "%c", &byte);
 	
-	//junta os dois com o operador OU
+	//junta os dois com o operador OU  = pra formar nosso short de 2 bytes do tamanho da arvore
 	tree_size = tree_size | byte;
 	
 	// retorna o tamanho da arvore
@@ -105,11 +114,16 @@ void descomprimir_arquivo(FILE* input, FILE* output, TREE* tree, int trash_size)
 	// le o primeiro byte do arquivo
     fscanf(input, "%c", &c1);
 
+	// le o proximo byte / 'c2 
+	// usamos C1 e C2 dessa forma até o byte do lixo
 	while(fscanf(input, "%c", &c2) != EOF)
-	{
+	{	
+		// percorre os bits do byte 
 		for(i = 7; i >= 0; i--)
 		{
 			// 1 ou 0 para direita ou esquerda / caminhos / percorrendo arvore
+			// is_bit_set esta presente para ______ conferir o caminho pra percorrer a arvore
+			// 1 = direita / 0 = esquerda
 			if(is_bit_set(c1, i))
 			{
 				new_tree = new_tree->right;
@@ -118,7 +132,7 @@ void descomprimir_arquivo(FILE* input, FILE* output, TREE* tree, int trash_size)
 				new_tree = new_tree->left;
 			}
             
-			// se for folha escreve no arquivo o (caracter/byte) atual
+			// quando chegarmos na folha escreve no arquivo o (caracter/byte) atual
 			if (is_leaf(new_tree))
             {
                 fwrite(&new_tree->c, 1, 1, output);
@@ -147,7 +161,7 @@ void descomprimir_arquivo(FILE* input, FILE* output, TREE* tree, int trash_size)
 
         if(is_leaf(new_tree))
         {
-			// escreve no arquivo o (caracter/byte) atual ||| ultimo
+			// escreve no arquivo o (caracter/byte) atual || ultimo
             fwrite(&new_tree->c, 1, 1, output);
 
 			// volta para a raiz
@@ -163,16 +177,16 @@ void descomprimir(FILE *input, FILE *output)
 	int trash_size = qual_tamanho_lixo(input);
 	rewind(input);
 
-	//2 primeiros bytes, tratamos do lixo, para pegar corretamente
+	//2 primeiros bytes, tratamos do lixo, para pegar corretamente apenas o tamanho da arvore
 	short tree_size = qual_tamanho_arvore(input);
 
 	//cria nó receber a arvore
 	TREE* tree = create_node_arvore('*', 0, NULL, NULL);
 
-	//cria a arvore traduzindo a pre_ordem excrita no arquivo
+	//cria a arvore traduzindo a pre_ordem escrita no arquivo
 	tree = qual_e_arvore(input, tree);
 
-	// caso arvore seja folha / caso especifico /
+	// caso arvore seja 1 folha / caso especifico /
 	if (is_leaf(tree)){
 		descomprimir_one_ascii_file(input, output, tree, trash_size);
 	}
@@ -180,5 +194,8 @@ void descomprimir(FILE *input, FILE *output)
 	else {
 		descomprimir_arquivo(input, output, tree, trash_size);
 	}
+
+	// libera a arvore da memoria e é necessario fazer isso porque nosso programa 
+	//esta em loop
 	free_tree(tree);
 }
