@@ -32,7 +32,7 @@ plt.plot(number, fp, label='Normal')
 plt.plot(number, fp_heap, label='Heap')
 
 # Adicionando rótulos e título
-plt.xlabel('Numbers deleted')
+plt.xlabel('Numbers inserted')
 plt.ylabel('Cumulative iterations')
 plt.title('Cumulative Iterations as Numbers Deleted Increase')
 
