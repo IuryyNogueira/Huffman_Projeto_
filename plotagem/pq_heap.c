@@ -21,10 +21,10 @@ PriorityQueueHeap* create_priority_queue(int capacity) {
 }
 
 // Função para ajustar o heap após a inserção de um novo elemento
-int heapify_up(PriorityQueueHeap* pq, int index) { // index é o indice do ultimo elemento da heap antes de chamar heapfy_up
+int heapify_up(PriorityQueueHeap* pq, int index) { // index é o indice do elemento que adcionamos
 
     int i = 0;
-    int* heap_array = pq->heap_array;
+    int* heap_array = pq->heap_array; //O(1)
     while (index > 0 && heap_array[index] < heap_array[(index - 1) / 2]) {
         i++;
         int temp = heap_array[index];
@@ -45,8 +45,9 @@ int enqueueHeap(PriorityQueueHeap* pq, int data) {
     if (pq->size == pq->capacity) { //nesse projeto nao vai passar do limite pq vamos inserir o tamanho certo de numeros
         fprintf(stderr, "A fila de prioridade está cheia.\n");
         exit(EXIT_FAILURE);
-    }
-    pq->heap_array[pq->size++] = data;
+    } //O(1)
+    
+    pq->heap_array[pq->size++] = data; //O(1)
     i += heapify_up(pq, pq->size - 1);
 
     return i;
@@ -93,7 +94,7 @@ int dequeue(PriorityQueueHeap* pq) {
         exit(EXIT_FAILURE);
     }
     int top_element = pq->heap_array[0];
-    pq->heap_array[0] = pq->heap_array[pq->size - 1];
+    pq->heap_array[0] =pq->heap_array[pq->size - 1];
     pq->size--;
     heapify_down(pq, 0);
     return top_element;

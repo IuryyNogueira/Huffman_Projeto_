@@ -24,18 +24,19 @@ int enqueueNoHeap(PriorityQueue* pq, int data) {
         fprintf(stderr, "Erro ao alocar memória para o novo nó.\n");
         exit(EXIT_FAILURE);
     }
-    newNode->data = data;
 
+    newNode->data = data; //O(1)
+
+    i++;
+
+    //veriicando se o item inserido vai ser o novo front
     if (pq->front == NULL || data < pq->front->data) {
         
-        i++;
         newNode->next = pq->front;
         pq->front = newNode;
     } 
     else {
 
-        //para entrar no else foi necessária uma comparação
-        i++;
         Node* current = pq->front;
         while (current->next != NULL && data >= current->next->data) {
             i++;
