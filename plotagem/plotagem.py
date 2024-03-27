@@ -1,17 +1,18 @@
 import matplotlib.pyplot as plt
-import numpy as np
 
-data = open('data.txt', 'r')
+data = open('data.txt', 'r') #r = reading
 number = []
-fp = []
-fp_heap = []
+fp = [] #array com a soma de iterações da fila de prioridade sem heap
+fp_heap = [] #array com a soma de iterações da fila de prioridade com heap
 
-i = 0
+i = 0 #numero dos x's
 
+# acumulo das iterações
 normal = 0
 heap = 0
-for linha in data:
-    linha = linha.strip()
+
+for l in data:
+    linha = l.strip()
     normal_reading_value, heap_reading_value = linha.split(' ') # Lendo valores do arquivo
 
     # Somando valores para acumular em normal e heap, para comparar a evolução

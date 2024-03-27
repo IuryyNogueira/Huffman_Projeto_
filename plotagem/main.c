@@ -9,7 +9,7 @@
 
 int main() {
     // Inicializando a semente para gerar números aleatórios
-    srand(time(NULL) ^ getpid());
+    srand(time(NULL) ^ getpid()); //ou ou
 
     // Criando fila de prioridade com heap e sem heap
     PriorityQueueHeap* pqHeap = create_priority_queue(MAX_SIZE);
@@ -25,8 +25,8 @@ int main() {
     // Gerando e inserindo números aleatórios em ambas as filas
     for (int i = 0; i < MAX_SIZE; i++) {
         int randomNumber = rand() % 100000; // Gera números aleatórios entre 0 e 99999
-        int heap = enqueueHeap(pqHeap, randomNumber);
-        int noHeap = enqueueNoHeap(pqNoHeap, randomNumber);
+        int heap = enqueueHeap(pqHeap, randomNumber);  //iterações fila de prioridade com heap
+        int noHeap = enqueueNoHeap(pqNoHeap, randomNumber); //iterações fila de prioridade sem heap
         
         // Escrever as iterações, para inserir os valores na heap, no arquivo
         fprintf(file, "%d %d\n", noHeap, heap);
