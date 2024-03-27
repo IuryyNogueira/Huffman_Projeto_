@@ -14,7 +14,6 @@ void criacao_fila_prioridade(lli frequencia[], HEAP *heap) {
         // passsar apenas os bytes que apareceram no arquivo
         if (frequencia[i] != 0) 
         {
-            // 
             enqueue(heap, frequencia[i], create_node_arvore((u_char) i, frequencia[i], NULL, NULL));
         }
     }
@@ -34,7 +33,7 @@ lli *contador_de_frequencia(FILE *file) {
     //lê cada byte do arquivo 
     while (fscanf(file, "%c", &item) != EOF) 
     {
-        //o byte lido é convertido para um int
+        // O byte lido é convertido para um int
         // A frequência correspondente ao byte lido é então incrementada.
         // ex : 'h' -- >(int) = 104
         frequencia[(int) item]++;

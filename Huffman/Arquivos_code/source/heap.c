@@ -28,7 +28,7 @@ HEAP *criar_heap()
     heap->size = 0;
 
     // loop para inicializar a heap ---> limpando 
-    for (int i = 1; i < HEAP_MAX_SIZE; ++i)
+    for (int i = 0; i < HEAP_MAX_SIZE; ++i)
     {
         heap->data[i] = NULL;
     }

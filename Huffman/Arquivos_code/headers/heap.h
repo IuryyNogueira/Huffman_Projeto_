@@ -17,7 +17,7 @@ struct HEAP {
 //Nó auxiliar 
 typedef struct _node {
     lli priority;
-    void *data;
+    void *data; 
 } _node;
 
 _node* _create_node(lli priority, void *data);

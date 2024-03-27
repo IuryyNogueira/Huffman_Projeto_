@@ -66,6 +66,17 @@ u_char set_bit(u_char c, int i)
     return mask | c;
 }
 
+
+/*00000000 00000000
+
+00000010 00000001 inicial
+
+00000001 00000000 depois << 8
+
+00000000 00000010 depois >> 8
+
+00000001 00000010 depois |= ou*/
+
 // u_short 16 bits
 // func para q o fwrite escreva os 16 bits corretamente
 // garante que a ordem dos bytes seja consistente durante a escrita no arquivo
@@ -91,6 +102,8 @@ void escrita_trash(u_char trash, FILE *file)
 
     u_char c;
     fscanf(file, "%c", &c);
+
+    // 00000101 << 5 = 10100000
 
     trash = trash << 5;
     trash |= c;
