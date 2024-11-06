@@ -54,6 +54,7 @@ short qual_tamanho_arvore(FILE *input)
 	return tree_size;
 }
 
+// traduz da header arvore recursivamente
 TREE* qual_e_arvore(FILE* input, TREE* tree)
 {
 	u_char c;
@@ -76,19 +77,23 @@ TREE* qual_e_arvore(FILE* input, TREE* tree)
 	return tree;
 }
 
+// CASO ESPECIAL
 void descomprimir_one_ascii_file(FILE* input, FILE* output, TREE* tree, int trash_size)
 {
 	TREE* new_tree = tree;
 
 	int i;
     u_char c1, c2;
-
+	
+	// le o primeiro byte do arquivo
     fscanf(input, "%c", &c1);
 	
+	// Nem entra aqui // pq só temos 1 folha
     while(fscanf(input, "%c", &c2) != EOF)
 	{
 		for(i = 7; i >= 0; i--)
-		{
+		{	
+			// escreve nosso byte 
             fwrite(&new_tree->c, 1, 1, output);
 			new_tree = tree;
 		}
@@ -96,8 +101,10 @@ void descomprimir_one_ascii_file(FILE* input, FILE* output, TREE* tree, int tras
         c1 = c2;
 	}
 
+	// caso tenha lixo
     for(i = 7; i >= trash_size; i--)
-    {
+    {	
+		// escreve nosso byte
         fwrite(&new_tree->c, 1, 1, output);
 		new_tree = tree;
     }

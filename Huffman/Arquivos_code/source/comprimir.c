@@ -39,9 +39,10 @@ void comprimir(FILE *input, FILE *output)
 
     u_char trash = 0;
 
-    // caso especial 
+    // caso especial arvore é apenas 1 folha
     if (is_leaf(huff_tree))
-    {
+    {   
+        //mesmo coisa do comprimir normal, mas com uma folha apenas
         trash = escrita_especial_one_ascii_char(input, output);
     }
     else
@@ -114,7 +115,7 @@ void escrita_trash(u_char trash, FILE *file)
     rewind(file);
 }
 
-// a arvore é uma folha
+// a arvore é uma folha caso especifico
 u_char escrita_especial_one_ascii_char(FILE *input, FILE *output)
 {   
     int i = 0; // contador
@@ -136,9 +137,11 @@ u_char escrita_especial_one_ascii_char(FILE *input, FILE *output)
         }
 
     }
-
-    // Se i não for igual a 0, ainda há bits que precisam ser escritos no arquivo
+    
+    // se i == 0, não há bits no byte, n tem oq escrever
     if (i == 0) return 0;
+    
+    // Se i não for igual a 0, ainda há bits que precisam ser escritos no arquivo
     fwrite(&byte, 1, 1, output);
 
     //Retorna o número de bits que precisam ser descartados
@@ -159,7 +162,11 @@ u_char escrita_arquivo_comprimido(FILE *input, FILE *output, HASH *paths)
         for(i = 0; i < path_size; i++)
         {
             if (path[i] == '1') {
-                //hora de criar nosso byte real 
+                
+                // hora de criar nosso byte real 
+                // que vai ser colocado no arquivo
+                
+                // antes nosso caminho era um array de char e vai virar um BYTE
                 byte = set_bit(byte, cont_bits);
             }
 
